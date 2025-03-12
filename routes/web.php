@@ -41,3 +41,11 @@ Route::get('armareforger/scenario', function () {
 Route::get('armareforger/setting', function () {
     return view('home.pages.armareforger.setting');
 })->name('armareforger.setting');
+
+Route::get('armareforger/settingpsn', function () {
+    return view('home.pages.armareforger.settingpsn');
+})->name('armareforger.settingpsn');
+
+Route::get('armareforger/gamemaster', function () {
+    return view('home.pages.armareforger.gamemaster');
+})->name('armareforger.gamemaster');

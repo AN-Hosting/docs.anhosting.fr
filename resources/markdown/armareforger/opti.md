@@ -1,19 +1,14 @@
-# AI Optimization Guide
+# Nombre d’IA Recommandé par Nombre de Slots
+```md
+Slots                Mini             Maxi
+16 slots         |   20      |       40 IA
+32 slots        |   40      |       60 IA
+64 slots        |   60      |       100 IA
+96 slots        |    100   |       140 IA
+128 slots      |    140    |       200 IA
+```
+# Explication :
 
-## Introduction
-Welcome to the AI optimization guide for Arma Reforger. This guide will help you improve your server's performance.
+- Chaque IA consomme du CPU, notamment lorsqu’elle est active (combat, pathfinding).
 
-## Key Points
-- Performance optimization
-- AI behavior settings
-- Server resource management
-
-## Configuration Steps
-1. Adjust AI count
-2. Set visibility ranges
-3. Optimize pathfinding
-
-## Best Practices
-- Monitor server resources
-- Regular performance checks
-- Balance between quality and performance
+- L'optimisation du despawn et des zones d’activation des IA est cruciale pour éviter un overload CPU.

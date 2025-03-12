@@ -20,7 +20,7 @@ This documentation provides comprehensive guides and resources for setting up, c
 
 ## Getting Started
 
-1. Visit our documentation at [docs.anhosting.fr]
+1. Visit our documentation at [docs.anhosting.fr](https://docs.anhosting.fr)
 2. Choose a topic from the navigation menu
 3. Follow the step-by-step guides
 
@@ -67,7 +67,7 @@ If you find a bug or have a suggestion, please follow these steps:
 
 ## Support
 
-- Join our [Discord](https://discord.gg/your-discord)
+- Join our [Discord](https://discord.gg/ZBYYVTsPbe)
 - Create an [Issue](https://github.com/AN-Hosting/docs.anhosting.fr/issues)
 - Check our [Wiki](https://github.com/AN-Hosting/docs.anhosting.fr/wiki)
 

@@ -86,15 +86,23 @@
                                 </a>
                                 <a href="{{ route('armareforger.setting') }}" 
                                     class="flex items-center px-4 py-2 text-sm {{ request()->routeIs('armareforger.setting') ? 'text-blue-600 bg-blue-50 dark:text-blue-500 dark:bg-blue-900/50' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800' }} rounded-lg transition-colors duration-200">
-                                    {{ __('Additional Settings') }}
+                                    {{ __('Paramètre suppl..') }}
                                 </a>
                                 <a href="{{ route('armareforger.restart') }}" 
                                     class="flex items-center px-4 py-2 text-sm {{ request()->routeIs('armareforger.restart') ? 'text-blue-600 bg-blue-50 dark:text-blue-500 dark:bg-blue-900/50' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800' }} rounded-lg transition-colors duration-200">
-                                    {{ __('Create Restart') }}
+                                    {{ __('Crée un restart') }}
                                 </a>
                                 <a href="{{ route('armareforger.opti') }}" 
                                     class="flex items-center px-4 py-2 text-sm {{ request()->routeIs('armareforger.opti') ? 'text-blue-600 bg-blue-50 dark:text-blue-500 dark:bg-blue-900/50' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800' }} rounded-lg transition-colors duration-200">
-                                    {{ __('AI Optimization') }}
+                                    {{ __('Optimisation IA') }}
+                                </a>
+                                <a href="{{ route('armareforger.settingpsn') }}" 
+                                    class="flex items-center px-4 py-2 text-sm {{ request()->routeIs('armareforger.settingpsn') ? 'text-blue-600 bg-blue-50 dark:text-blue-500 dark:bg-blue-900/50' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800' }} rounded-lg transition-colors duration-200">
+                                    {{ __('Paramètre PlayStation') }}
+                                </a>
+                                <a href="{{ route('armareforger.gamemaster') }}" 
+                                    class="flex items-center px-4 py-2 text-sm {{ request()->routeIs('armareforger.gamemaster') ? 'text-blue-600 bg-blue-50 dark:text-blue-500 dark:bg-blue-900/50' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800' }} rounded-lg transition-colors duration-200">
+                                    {{ __('GameMaster') }}
                                 </a>
                             </div>
                         </div>
