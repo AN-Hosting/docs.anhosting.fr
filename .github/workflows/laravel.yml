@@ -85,6 +85,8 @@ jobs:
       run: |
         ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
           cd ${{ secrets.REMOTE_PATH }} && \
+          git config --global --add safe.directory ${{ secrets.REMOTE_PATH }} && \
+          sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} . && \
           git pull origin main && \
           composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev && \
           npm ci && \
