@@ -91,6 +91,11 @@ jobs:
           composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev && \
           npm ci && \
           npm run build && \
+          mkdir -p database && \
+          touch database/database.sqlite && \
+          chmod -R 775 database && \
+          chmod 775 database/database.sqlite && \
+          php artisan migrate --force && \
           php artisan optimize:clear && \
           php artisan optimize && \
           php artisan view:cache && \
