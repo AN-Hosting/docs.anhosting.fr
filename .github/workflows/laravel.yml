@@ -58,22 +58,11 @@ jobs:
     name: Deploy to Production
     needs: test
     runs-on: ubuntu-latest
+    environment: production
     
     steps:
     - uses: actions/checkout@v4
       
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-
-    - name: Install Node dependencies
-      run: npm ci
-
-    - name: Build assets
-      run: npm run build
-
     - name: Configure SSH
       run: |
         mkdir -p ~/.ssh/
@@ -82,26 +71,65 @@ jobs:
         ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
     - name: Deploy to Production
+      env:
+        DEPLOY_PATH: /var/www/docs.anhosting.fr
+        DEPLOY_USER: ${{ secrets.SSH_USER }}
       run: |
         ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
-          cd ${{ secrets.REMOTE_PATH }} && \
-          git config --global --add safe.directory ${{ secrets.REMOTE_PATH }} && \
-          sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} . && \
-          sudo apt-get update && \
-          sudo apt-get install -y php8.2-sqlite3 && \
-          git pull origin main && \
-          composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev && \
-          npm ci && \
-          npm run build && \
-          mkdir -p database && \
-          touch database/database.sqlite && \
-          chmod -R 775 database && \
-          chmod 775 database/database.sqlite && \
-          php artisan migrate --force && \
-          php artisan optimize:clear && \
-          php artisan optimize && \
-          php artisan view:cache && \
-          php artisan config:cache && \
-          php artisan route:cache && \
-          sudo systemctl restart php8.2-fpm
+          # Vérification et installation des dépendances
+          if ! dpkg -l | grep -q "php8.2-sqlite3"; then
+            sudo apt-get update
+            sudo apt-get install -y php8.2-sqlite3
+          fi
+
+          # Préparation du déploiement
+          cd /var/www/docs.anhosting.fr
+          
+          # Backup de la base de données
+          if [ -f "database/database.sqlite" ]; then
+            cp database/database.sqlite database/database.sqlite.backup
+          fi
+
+          # Configuration Git
+          git config --global --add safe.directory /var/www/docs.anhosting.fr
+          
+          # Pull des changements
+          git pull origin main
+          
+          # Installation des dépendances PHP
+          composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+          
+          # Installation et build des assets
+          npm ci
+          npm run build
+          
+          # Gestion des permissions
+          sudo chown -R www-data:www-data .
+          sudo find . -type f -exec chmod 644 {} \;
+          sudo find . -type d -exec chmod 755 {} \;
+          
+          # Permissions spéciales pour les dossiers qui nécessitent lécriture
+          sudo chmod -R 775 storage bootstrap/cache database
+          sudo chown -R $USER:www-data storage bootstrap/cache database
+          
+          # Création/Permissions base de données SQLite
+          if [ ! -f "database/database.sqlite" ]; then
+            touch database/database.sqlite
+          fi
+          sudo chmod 775 database/database.sqlite
+          sudo chown $USER:www-data database/database.sqlite
+          
+          # Optimisations Laravel
+          php artisan migrate --force
+          php artisan optimize:clear
+          php artisan optimize
+          php artisan view:cache
+          php artisan config:cache
+          php artisan route:cache
+          
+          # Redémarrage des services
+          sudo systemctl reload php8.2-fpm
+          sudo systemctl reload nginx
+          
+          echo "Déploiement terminé avec succès!"
         '
