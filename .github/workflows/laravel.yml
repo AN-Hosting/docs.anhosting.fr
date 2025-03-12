@@ -19,6 +19,18 @@ jobs:
         extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, json, libxml
         coverage: xdebug
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Node dependencies
+      run: npm ci
+
+    - name: Build assets
+      run: npm run build
+
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
@@ -50,6 +62,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Node dependencies
+      run: npm ci
+
+    - name: Build assets
+      run: npm run build
+
     - name: Configure SSH
       run: |
         mkdir -p ~/.ssh/
@@ -63,6 +87,8 @@ jobs:
           cd ${{ secrets.REMOTE_PATH }} && \
           git pull origin main && \
           composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev && \
+          npm ci && \
+          npm run build && \
           php artisan optimize:clear && \
           php artisan optimize && \
           php artisan view:cache && \
