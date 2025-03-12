@@ -87,6 +87,8 @@ jobs:
           cd ${{ secrets.REMOTE_PATH }} && \
           git config --global --add safe.directory ${{ secrets.REMOTE_PATH }} && \
           sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} . && \
+          sudo apt-get update && \
+          sudo apt-get install -y php8.2-sqlite3 && \
           git pull origin main && \
           composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev && \
           npm ci && \
@@ -100,5 +102,6 @@ jobs:
           php artisan optimize && \
           php artisan view:cache && \
           php artisan config:cache && \
-          php artisan route:cache
+          php artisan route:cache && \
+          sudo systemctl restart php8.2-fpm
         '
