@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.dark {
+    color-scheme: dark;
+}
+
+[x-cloak] {
+    display: none;
+}
+
+@layer utilities {
+    .animate-reveal {
+        animation: reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes reveal {
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Ajout d'une transition douce pour le retour */
+    .opacity-0 {
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .hero-image-zoom {
+        animation: heroZoom 8s ease-in-out infinite;
+    }
+
+    @keyframes heroZoom {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.5),
+                     0 2px 4px rgba(0,0,0,0.5);
+    }
+}
